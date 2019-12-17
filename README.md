@@ -5,3 +5,4 @@
 
 - django version: 2.2 
 - python version: 3.7.4
+- PostgreSQL:10.1
