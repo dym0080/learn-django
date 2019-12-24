@@ -8,6 +8,9 @@ class Board(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 class Topic(models.Model):
     subject = models.CharField(max_length=300)
     last_update = models.DateField(auto_now_add=True)
