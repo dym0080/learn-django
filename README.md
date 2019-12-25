@@ -13,3 +13,6 @@
 ## testsite
 
 深入官方文档学习的实践。
+
+## myproject
+[A Complete Beginner's Guide to Django](https://simpleisbetterthancomplex.com/series/beginners-guide/1.11/)的项目实践
