@@ -15,3 +15,11 @@
 - 路由的变化
 - `models.ForeignKey` 的参数 `on_delete` 为**必选参数**
 - ModelForm 
+
+windows环境几个常用的命令：
+
+- `django-admin startproject projectname`: 一般在项目开始时用于创建一个项目。
+- `django-admin startapp appname`:在项目中创建应用程序，一个项目可以有一个或多个应用程序。
+- `py manage.py runserver`:运行程序。
+- `py manage.py test` : 自动化测试项目中的所有测试用例
+- `py manage.py test appname`: 自动化测试项目中的appname的测试用例
