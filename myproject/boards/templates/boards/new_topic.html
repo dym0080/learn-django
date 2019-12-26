@@ -1,5 +1,7 @@
 {% extends 'boards/base.html' %}
 
+{% load widget_tweaks %}
+
 {% block title %}Start a New Topic{% endblock %}
 
 {% block breadcrumb %}
@@ -9,16 +11,18 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
+<form method="POST" novalidate>
     {% csrf_token %}
-    <div class="form-group">
+    {% include 'includes/form.html' %}
+    <!-- {{ form.as_p }} -->
+    <!-- <div class="form-group">
         <label for="id_subject">Subject</label>
         <input type="text" class="form-control" id="id_subject" name="subject">
     </div>
     <div class="form-group">
         <label for="id_message">Message</label>
         <textarea class="form-control" id="id_message" name="message" rows="5"></textarea>
-    </div>
+    </div> -->
     <button type="submit" class="btn btn-success">Post</button>
 </form>
 
