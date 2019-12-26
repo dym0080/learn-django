@@ -23,3 +23,4 @@ windows环境几个常用的命令：
 - `py manage.py runserver`:运行程序。
 - `py manage.py test` : 自动化测试项目中的所有测试用例
 - `py manage.py test appname`: 自动化测试项目中的appname的测试用例
+
