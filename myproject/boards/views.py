@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from .models import Board, Topic, Post
 from .forms import NewTopicForm
 
@@ -13,15 +12,13 @@ def home(request):
 def board_topics(request, pk):
     board = get_object_or_404(Board, pk=pk)
     topics = Topic.objects.filter(board_id=pk)
-    print(12)
-    print(board)
     return render(request, 'boards/topics.html', {'board':board, 'topics':topics})
 
 @login_required
 def new_topic(request, pk):
     board = get_object_or_404(Board, pk=pk)
-    user = User.objects.first()
     if request.method == 'POST':
+        user = request.user
         form = NewTopicForm(request.POST)
         if form.is_valid():
             topic = form.save(commit=False)
