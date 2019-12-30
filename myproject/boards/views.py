@@ -35,3 +35,11 @@ def new_topic(request, pk):
     else:
         form = NewTopicForm()
     return render(request, 'boards/new_topic.html', {'board':board, 'form':form})
+
+def topic_posts(request, pk, topic_pk):
+    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
+    posts = Post.objects.filter(topic_id=topic_pk)
+    print(11)
+    print(posts)
+    print(12)
+    return render(request, 'boards/topic_posts.html', {'topic':topic, 'posts':posts})
