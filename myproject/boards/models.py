@@ -21,8 +21,8 @@ class Board(models.Model):
 class Topic(models.Model):
     subject = models.CharField(max_length=300)
     last_update = models.DateField(auto_now_add=True)
-    board = models.ForeignKey(Board, on_delete=models.CASCADE)
-    starter = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='topics')
+    starter = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='topics')
 
     def __str__(self):
         return self.subject
@@ -31,8 +31,8 @@ class Post(models.Model):
     message = models.TextField(max_length=5000)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(null=True)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='posts')
+    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='posts')
     updated_by = models.ForeignKey(User, null=True, related_name='+', on_delete=models.SET_NULL)
 
     def __str__(self):
