@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>{% block title %}Django Boards{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'boards/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'boards/css/simplemde.min.css' %}">
     {% block stylesheet %}{% endblock %}
   </head>
   <body>
@@ -51,4 +52,5 @@
   <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
   <script src="{% static 'js/popper.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  {% block javascript %}{% endblock %} 
 </html>
