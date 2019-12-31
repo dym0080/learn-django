@@ -15,6 +15,7 @@ from .forms import NewTopicForm, PostForm
 #     return render(request, 'boards/home.html', {'boards':boards})
 
 class BoardListView(ListView):
+    """ 视图 `home` 的重构，改为类视图 """
     model = Board
     template_name = 'boards/home.html'
     context_object_name = 'boards'
@@ -33,6 +34,7 @@ class BoardListView(ListView):
 #     return render(request, 'boards/topics.html', {'board':board, 'topics':topics})
 
 class TopicListView(ListView):
+    """ 视图 board_topics的重构，改为类视图 """
     model = Topic
     context_object_name = 'topics'
     template_name = 'boards/topics.html'
@@ -69,12 +71,30 @@ def new_topic(request, pk):
         form = NewTopicForm()
     return render(request, 'boards/new_topic.html', {'board':board, 'form':form})
 
-def topic_posts(request, pk, topic_pk):
-    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
-    topic.views += 1
-    topic.save()
-    posts = Post.objects.filter(topic_id=topic_pk)
-    return render(request, 'boards/topic_posts.html', {'topic':topic, 'posts':posts})
+# def topic_posts(request, pk, topic_pk):
+#     topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
+#     topic.views += 1
+#     topic.save()
+#     posts = Post.objects.filter(topic_id=topic_pk)
+#     return render(request, 'boards/topic_posts.html', {'topic':topic, 'posts':posts})
+
+class PostListView(ListView):
+    """ 视图 topic_posts 的重构，改为类视图"""
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'boards/topic_posts.html'
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        self.topic.views += 1
+        self.topic.save()
+        kwargs['topic'] = self.topic
+        return super().get_context_data(**kwargs)
+
+    def get_queryset(self):
+        self.topic = get_object_or_404(Topic, board__pk=self.kwargs.get('pk'), pk=self.kwargs.get('topic_pk'))
+        queryset = self.topic.posts.order_by('created_at')
+        return queryset
 
 @login_required
 def reply_topic(request, pk, topic_pk):
