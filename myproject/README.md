@@ -23,4 +23,6 @@ windows环境几个常用的命令：
 - `py manage.py runserver`:运行程序。
 - `py manage.py test` : 自动化测试项目中的所有测试用例
 - `py manage.py test appname`: 自动化测试项目中的appname的测试用例
+- `py manage.py migrate`: 如果models有改动，Django 会抓取所有迁移文件然后生成数据库 schema。会更新数据库
+- `py manage.py makemigrations`: 生成迁徙文件，不会更新数据库
 
