@@ -86,8 +86,12 @@ class PostListView(ListView):
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
-        self.topic.views += 1
-        self.topic.save()
+        session_key = 'viewed_topic_{}'.format(self.topic.pk)
+        # 相同的用户再次刷新页面的时候只统计一次
+        if not self.request.session.get(session_key, False):
+            self.topic.views += 1
+            self.topic.save()
+            self.request.session[session_key] = True
         kwargs['topic'] = self.topic
         return super().get_context_data(**kwargs)
 
@@ -98,17 +102,29 @@ class PostListView(ListView):
 
 @login_required
 def reply_topic(request, pk, topic_pk):
+    print("0S")
+    print("pk:"+str(pk))
+    print("topic_pk"+str(topic_pk))
     topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
     posts = Post.objects.filter(topic_id=topic_pk)
     if request.method == 'POST':
+        print("1S")
         form = PostForm(request.POST)
         if form.is_valid():
+            print("4S")
             post = form.save(commit=False)
+            print("message21:"+post.message)
             post.topic = topic
             post.created_by = request.user
             post.save()
+
+            topic.last_update = timezone.now()
+            topic.save()
+            
+
             return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
     else:
+        print("3S")
         form =PostForm()
     return render(request, 'boards/reply_topic.html', {'topic': topic, 'posts': posts, 'form': form})
 
