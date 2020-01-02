@@ -6,7 +6,7 @@
 - python：3.6
 - Django：1.11
 
-本项目使用的版本如下，所以代码会有所区别
+本项目使用的版本如下，所以代码会有所区别(见依赖文件：`requirements.txt`):
 - python：3.7.4
 - Django：2.2
 
