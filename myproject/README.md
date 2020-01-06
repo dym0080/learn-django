@@ -14,15 +14,17 @@
 
 - 路由的变化
 - `models.ForeignKey` 的参数 `on_delete` 为**必选参数**
-- ModelForm 
 
-windows环境几个常用的命令：
+使用Django时在windows环境几个常用的命令：
 
 - `django-admin startproject projectname`: 一般在项目开始时用于创建一个项目。
 - `django-admin startapp appname`:在项目中创建应用程序，一个项目可以有一个或多个应用程序。
 - `py manage.py runserver`:运行程序。
 - `py manage.py test` : 自动化测试项目中的所有测试用例
-- `py manage.py test appname`: 自动化测试项目中的appname的测试用例
-- `py manage.py migrate`: 如果models有改动，Django 会抓取所有迁移文件然后生成数据库 schema。会更新数据库
-- `py manage.py makemigrations`: 生成迁徙文件，不会更新数据库
+- `py manage.py test appname`: 自动化测试项目中的appname的所有测试用例
+- `py manage.py test appname.tests.classname.functionname`: 自动化测试项目中的appname的类下面的某个具体的测试用例。
+- `py manage.py migrate`: 获取迁徙文件，把改动应用到数据库去。
+- `py manage.py makemigrations`: 如果models有改动，使用此命令就会生成迁徙文件，但不会更新数据库
+- `py manage.py shell`:这与直接输入python指令来调用交互式控制台是非常相似的，除此之外，项目将被添加到sys.path并加载Django。这意味着我们可以在项目中导入我们的模型和其他资源并使用它。
+- `manage.py createsuperuser`:创建一个超级管理员用户
 
