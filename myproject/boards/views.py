@@ -96,37 +96,32 @@ class PostListView(ListView):
         return super().get_context_data(**kwargs)
 
     def get_queryset(self):
-        self.topic = get_object_or_404(Topic, board__pk=self.kwargs.get('pk'), pk=self.kwargs.get('topic_pk'))
+        self.topic = get_object_or_404(Topic, board__pk=self.kwargs.get('pk'),
+                                       pk=self.kwargs.get('topic_pk'))
         queryset = self.topic.posts.order_by('created_at')
         return queryset
 
 @login_required
 def reply_topic(request, pk, topic_pk):
-    print("0S")
-    print("pk:"+str(pk))
-    print("topic_pk"+str(topic_pk))
     topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
     posts = Post.objects.filter(topic_id=topic_pk)
     if request.method == 'POST':
-        print("1S")
         form = PostForm(request.POST)
         if form.is_valid():
-            print("4S")
             post = form.save(commit=False)
-            print("message21:"+post.message)
             post.topic = topic
             post.created_by = request.user
             post.save()
 
             topic.last_update = timezone.now()
             topic.save()
-            
 
             return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
     else:
         print("3S")
-        form =PostForm()
-    return render(request, 'boards/reply_topic.html', {'topic': topic, 'posts': posts, 'form': form})
+        form = PostForm()
+    return render(request, 'boards/reply_topic.html',
+                  {'topic': topic, 'posts': posts, 'form': form})
 
 @method_decorator(login_required, name='dispatch')
 class PostUpdateView(UpdateView):
@@ -142,7 +137,7 @@ class PostUpdateView(UpdateView):
         post .updated_at = timezone.now()
         post.save()
         return redirect('topic_posts', pk=post.topic.board.pk, topic_pk=post.topic.pk)
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(created_by=self.request.user)

@@ -22,9 +22,10 @@ urlpatterns = [
         template_name='accounts/password_reset_complete.html'), name='password_reset_complete'),
 
     path('settings/password/', auth_views.PasswordChangeView.as_view(
-        template_name='accounts/password_change.html'),name='password_change'),
+        template_name='accounts/password_change.html'), name='password_change'),
 
     path('settings/password/done', auth_views.PasswordChangeDoneView.as_view(
-        template_name='accounts/password_change_done.html'), name='password_change_done'),   
+        template_name='accounts/password_change_done.html'), name='password_change_done'),
+
     path('settings/account/', views.UserUpdateView.as_view(), name='my_account'),
 ]
